@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-const defaultEndpoint = `https://api.rawg.io/api/games?key=${process.env.API_KEY}`
 import styled from 'styled-components'
 
 const Game = styled.div`
@@ -50,16 +49,16 @@ export default function GamesPageDetails({ data }: any) {
       )}
       <GameGrid>
         {results.map((game: any) => {
-          const { name, id, background_image: image } = game
+          const { name, slug, background_image: image } = game
           return (
-            <Game key={id}>
+            <Game key={slug}>
               <p>{name}</p>
               <Image
                 src={image}
                 alt={`${name} screenshot`}
                 height={360}
                 width={640}
-                onClick={() => router.push(`/game/${id}`)}
+                onClick={() => router.push(`/game/${slug}`)}
               />
             </Game>
           )
