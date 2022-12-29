@@ -1,7 +1,7 @@
 import GameGrid from '../../components/GameGrid'
 import Nav from '../../components/Nav'
 
-export default function GamesPageDetails({ results }: any) {
+export default function SearchPageDetails({ results }: any) {
   if (!results) {
     return <h1>Loading</h1>
   }
@@ -15,8 +15,9 @@ export default function GamesPageDetails({ results }: any) {
 }
 
 export async function getServerSideProps({ params }: any) {
+  console.log(params)
   const res = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}&page_size=9`
+    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${params.id}&page_size=9`
   )
   const data = await res.json()
 

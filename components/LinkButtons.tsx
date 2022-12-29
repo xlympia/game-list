@@ -2,16 +2,14 @@ import styled from 'styled-components'
 
 export const LinkButtons = styled.div`
   display: flex;
-  margin-top: 10px;
   gap: 0.75rem;
-  justify-content: center;
 
   a {
     text-decoration: none;
     background: #5e548e;
     padding: 0.5rem;
     border-radius: 12px;
-    font-size: 30px;
+    font-size: 24px;
     transition: all 0.1s ease-in-out;
     font-weight: bold;
   }

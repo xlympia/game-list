@@ -5,6 +5,10 @@ const nextConfig = {
     domains: ['media.rawg.io'],
   },
 
+  compiler: {
+    styledComponents: true,
+  },
+
   async redirects() {
     return [
       {
@@ -14,6 +18,11 @@ const nextConfig = {
       },
       {
         source: '/',
+        destination: '/games/1',
+        permanent: false,
+      },
+      {
+        source: '/search',
         destination: '/games/1',
         permanent: false,
       },
