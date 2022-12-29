@@ -18,7 +18,7 @@ export default function GameGrid({ results }: any) {
         return (
           <Game
             key={slug}
-            src={image}
+            src={image ?? ''}
             name={name}
             onClick={() => router.push(`/game/${slug}`)}
           ></Game>

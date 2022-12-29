@@ -31,7 +31,11 @@ export default function Game({ name, src, onClick }: any) {
   return (
     <Style onClick={onClick}>
       <p>{name}</p>
-      <Image src={src} alt={`${name} screenshot`} height={360} width={640} />
+      {src ? (
+        <Image src={src} alt={`${name} screenshot`} height={360} width={640} />
+      ) : (
+        <></>
+      )}
     </Style>
   )
 }
