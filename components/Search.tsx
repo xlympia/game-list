@@ -37,12 +37,12 @@ export function Suggestions({ games }: any) {
 }
 export default function Search({ results }: any) {
   const [search, setSearch] = useState('')
-  const { data: suggestions, error } = useSWR(
-    `/api/search?id=${search}`,
-    fetcher
-  )
+  //   const { data: suggestions, error } = useSWR(
+  //     `/api/search?id=${search}`,
+  //     fetcher
+  //   )
 
-  console.log(suggestions)
+  //   console.log(suggestions)
 
   const router = useRouter()
 
@@ -61,7 +61,7 @@ export default function Search({ results }: any) {
       />
       <button onClick={requestSearch}>Search</button>
 
-      {suggestions ? <Suggestions games={suggestions} /> : <></>}
+      {/* {suggestions ? <Suggestions games={suggestions} /> : <></>} */}
     </Style>
   )
 }
