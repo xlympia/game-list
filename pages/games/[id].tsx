@@ -5,10 +5,12 @@ import styled from 'styled-components'
 
 const Game = styled.div`
   display: flex;
-  border: 2px solid #777;
+  border: 2px solid #5e548e;
   padding: 1rem;
   border-radius: 12px;
   flex-direction: column;
+
+  transition: all 0.1s ease-in-out;
 
   img {
     margin-top: 10px;
@@ -19,6 +21,33 @@ const Game = styled.div`
 
   p {
     font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  :hover {
+    box-shadow: 0 5px 15px rgb(94, 84, 142, 0.4);
+  }
+`
+
+const LinkButtons = styled.div`
+  display: flex;
+  margin-top: 10px;
+  gap: 0.75rem;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+    background: #5e548e;
+    padding: 0.5rem;
+    border-radius: 12px;
+    font-size: 30px;
+    transition: all 0.1s ease-in-out;
+    font-weight: bold;
+  }
+
+  a:hover {
+    color: #be95c4;
+    box-shadow: 0 5px 15px rgb(94, 84, 142, 0.4);
   }
 `
 
@@ -30,23 +59,25 @@ const GameGrid = styled.div`
   text-align: center;
 `
 
-export default function GamesPageDetails({ data }: any) {
-  const { results } = data
+export default function GamesPageDetails({ results }: any) {
   const router = useRouter()
   const id = router.query.id as string
 
-  if (!data) {
+  if (!results) {
     return <h1>Loading</h1>
   }
 
   return (
     <main>
-      <Link href={`/games/${parseInt(id) + 1}`}>Next page</Link>
-      {parseInt(id) - 1 > 0 ? (
-        <Link href={`/games/${parseInt(id) - 1}`}>Previous page</Link>
-      ) : (
-        <></>
-      )}
+      <LinkButtons>
+        {parseInt(id) - 1 > 0 ? (
+          <Link href={`/games/${parseInt(id) - 1}`}>&larr;</Link>
+        ) : (
+          <></>
+        )}
+        <Link href={`/games/${parseInt(id) + 1}`}>&rarr;</Link>
+      </LinkButtons>
+
       <GameGrid>
         {results.map((game: any) => {
           const { name, slug, background_image: image } = game
@@ -68,6 +99,38 @@ export default function GamesPageDetails({ data }: any) {
   )
 }
 
+export async function getServerSideProps({ params }: any) {
+  const res = await fetch(
+    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}&page_size=9`
+  )
+  const data = await res.json()
+  // console.log(data.results)
+
+  const results = data.results
+
+  return {
+    props: {
+      results,
+    },
+  }
+}
+
+// !: Ugly static rendering code.
+
+// export async function getStaticProps({ params }: any) {
+//   const res = await fetch(
+//     `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}`
+//   )
+//   const data = await res.json()
+//   console.log(data)
+
+//   return {
+//     props: {
+//       data,
+//     },
+//   }
+// }
+
 // export async function getStaticPaths() {
 //   let paths = []
 //   let pages
@@ -86,33 +149,5 @@ export default function GamesPageDetails({ data }: any) {
 //   return {
 //     paths,
 //     fallback: true,
-//   }
-// }
-
-export async function getServerSideProps({ params }: any) {
-  const res = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}`
-  )
-  const data = await res.json()
-  console.log(data)
-
-  return {
-    props: {
-      data,
-    },
-  }
-}
-
-// export async function getStaticProps({ params }: any) {
-//   const res = await fetch(
-//     `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}`
-//   )
-//   const data = await res.json()
-//   console.log(data)
-
-//   return {
-//     props: {
-//       data,
-//     },
 //   }
 // }
