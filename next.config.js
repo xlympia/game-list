@@ -4,6 +4,21 @@ const nextConfig = {
   images: {
     domains: ['media.rawg.io'],
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/games',
+        destination: '/games/1',
+        permanent: false,
+      },
+      {
+        source: '/',
+        destination: '/games/1',
+        permanent: false,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

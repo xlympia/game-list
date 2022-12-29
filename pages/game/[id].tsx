@@ -21,7 +21,6 @@ const Game = styled.div`
 
   p {
     font-size: 1.2rem;
-    font-weight: bold;
   }
 `
 
@@ -60,8 +59,6 @@ export async function getServerSideProps({ params }: any) {
     `https://api.rawg.io/api/games/${params.id}?key=${process.env.API_KEY}`
   )
   const data = await res.json()
-
-  console.log(data)
 
   return {
     props: {
