@@ -8,6 +8,7 @@ export default function Home() {
       <Head>
         <title>Game List</title>
         <meta name="description" content="Game List" />
+        <meta property="og:image" content="smile.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
