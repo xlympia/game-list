@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useSWR, { Key, Fetcher } from 'swr'
+import useSWR from 'swr'
 
 const Style = styled.div`
   display: flex;
@@ -19,31 +19,53 @@ const Style = styled.div`
 `
 
 const SuggestionsStyle = styled.div`
+  background: #5e548e;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: scroll;
+  padding: 0.5rem;
+  gap: 6px;
+  width: 15.8rem;
+  height: 15rem;
   position: fixed;
   top: 3rem;
-  color: red;
 `
 const fetcher = async (arg: any, ...args: any) =>
   await fetch(arg, ...args).then((res) => res.json())
 
 export function Suggestions({ games }: any) {
-  return (
-    <SuggestionsStyle>
+  const [open, setOpen] = useState(true)
+  const router = useRouter()
+
+  function requestGamePage(name: string) {
+    router.push(`/game/${name}`)
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', () => setOpen(false))
+
+    return () => {
+      document.removeEventListener('click', () => setOpen(false))
+    }
+  }, [])
+
+  return open ? (
+    <SuggestionsStyle onClick={(event) => event.stopPropagation()}>
       {games.map((game: any) => (
-        <p>{game}</p>
+        <button onClick={() => requestGamePage(game.slug)}>{game.name}</button>
       ))}
     </SuggestionsStyle>
+  ) : (
+    <></>
   )
 }
 export default function Search({ results }: any) {
   const [search, setSearch] = useState('')
-  //   const { data: suggestions, error } = useSWR(
-  //     `/api/search?id=${search}`,
-  //     fetcher
-  //   )
-
-  //   console.log(suggestions)
-
+  const { data: suggestions, error } = useSWR(
+    `/api/search?id=${search}`,
+    fetcher
+  )
   const router = useRouter()
 
   function requestSearch() {
@@ -58,24 +80,11 @@ export default function Search({ results }: any) {
         type="text"
         placeholder="Red Dead Redemption 2"
         onChange={(e) => setSearch(e.target.value)}
+        onClick={(event) => event.stopPropagation()}
       />
       <button onClick={requestSearch}>Search</button>
 
-      {/* {suggestions ? <Suggestions games={suggestions} /> : <></>} */}
+      {suggestions && search ? <Suggestions games={suggestions} /> : <></>}
     </Style>
   )
 }
-
-// export async function getServerSideProps({ params }: any) {
-//   const res = await fetch(
-//     `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${params.id}&page_size=9`
-//   )
-//   const data = await res.json()
-//   console.log(data.results)
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   }
-// }

@@ -3,6 +3,7 @@ import { LinkButtons } from './LinkButtons'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Search from './Search'
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 
 const Style = styled.div`
   position: sticky;
@@ -22,11 +23,15 @@ export default function Nav() {
       <Search />
       <LinkButtons>
         {parseInt(id) - 1 > 0 ? (
-          <Link href={`/games/${parseInt(id) - 1}`}>&larr;</Link>
+          <Link href={`/games/${parseInt(id) - 1}`}>
+            <AiOutlineArrowLeft />
+          </Link>
         ) : (
           <></>
         )}
-        <Link href={`/games/${parseInt(id) + 1}`}>&rarr;</Link>
+        <Link href={`/games/${parseInt(id) + 1}`}>
+          <AiOutlineArrowRight />
+        </Link>
       </LinkButtons>
     </Style>
   )

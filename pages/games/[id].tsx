@@ -16,7 +16,7 @@ export default function GamesPageDetails({ results }: any) {
 
 export async function getServerSideProps({ params }: any) {
   const res = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}&page_size=9`
+    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&page=${params.id}&page_size=16&ordering=-rating`
   )
   const data = await res.json()
 

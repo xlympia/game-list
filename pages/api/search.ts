@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const data = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${req.query.id}&page_size=9`
+    `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${req.query.id}&page_size=24&ordering=-rating`
   )
   const dataJSON = await data.json()
 
