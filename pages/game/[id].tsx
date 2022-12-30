@@ -5,9 +5,9 @@ export default function GamePageDetails({ data }: any) {
     return <h1>Loading</h1>
   }
 
-  const { name, background_image: image } = data
+  const { name, background_image: image, rating } = data
 
-  return <Game src={image} name={name} />
+  return <Game src={image} name={name} rating={rating} />
 }
 export async function getServerSideProps({ params }: any) {
   const res = await fetch(

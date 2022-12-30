@@ -16,7 +16,11 @@ const Style = styled.div`
 
 export default function Nav() {
   const router = useRouter()
-  const id = router.query.id as string
+  let id = router.query.id as string
+
+  if (isNaN(parseInt(id))) {
+    id = '0'
+  }
 
   return (
     <Style>

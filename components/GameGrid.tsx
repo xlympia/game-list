@@ -14,12 +14,13 @@ export default function GameGrid({ results }: any) {
   return (
     <Grid>
       {results.map((game: any) => {
-        const { name, slug, background_image: image } = game
+        const { name, slug, background_image: image, rating } = game
         return (
           <Game
             key={slug}
             src={image ?? ''}
             name={name}
+            rating={rating}
             onClick={() => router.push(`/game/${slug}`)}
           ></Game>
         )
