@@ -7,7 +7,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Style = styled.div`
   position: sticky;
-  top: 5px;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +15,10 @@ const Style = styled.div`
 
   svg {
     display: flex;
+  }
+
+  .savedGames {
+    font-size: 1.2rem;
   }
 `
 
@@ -39,6 +43,9 @@ export default function Nav() {
         )}
         <Link href={`/games/${parseInt(id) + 1}`}>
           <FaArrowRight />
+        </Link>
+        <Link className="savedGames" href={`/saved/games`}>
+          Saved
         </Link>
       </LinkButtons>
     </Style>

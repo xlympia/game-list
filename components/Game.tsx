@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import Image from 'next/image'
 import Rating from './Rating'
+import { Provider, useSelector, useDispatch } from 'react-redux'
+import store, { selectSavedGames, removeGame, addGame } from '../pages/store'
 
 export const Style = styled.div`
   display: flex;
@@ -29,10 +31,13 @@ export const Style = styled.div`
 `
 
 export default function Game({ name, rating, src, onClick }: any) {
+  const dispatch = useDispatch()
+
   return (
     <Style onClick={onClick}>
       <p>{name}</p>
       <Rating rating={rating} />
+      <button onClick={() => dispatch(addGame(name))}>Save game</button>
 
       {src ? (
         <Image src={src} alt={`${name} screenshot`} height={360} width={640} />

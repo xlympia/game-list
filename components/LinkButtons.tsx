@@ -10,7 +10,6 @@ export const LinkButtons = styled.div`
     padding: 0.5rem;
     border-radius: 12px;
     font-size: 24px;
-    transition: all 0.1s ease-in-out;
     font-weight: bold;
   }
 

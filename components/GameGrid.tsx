@@ -22,7 +22,7 @@ export default function GameGrid({ results }: any) {
             name={name}
             rating={rating}
             onClick={() => router.push(`/game/${slug}`)}
-          ></Game>
+          />
         )
       })}
     </Grid>
