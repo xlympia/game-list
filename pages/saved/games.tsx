@@ -1,7 +1,7 @@
 import GameGrid from '../../components/GameGrid'
 import SavedGamesNav from '../../components/SavedGamesNav'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectSavedGames, removeGame } from '../store'
+import { selectSavedGames, removeGame } from '../../store'
 import { useState } from 'react'
 
 export default function SavedGames() {

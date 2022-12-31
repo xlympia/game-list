@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import Rating from './Rating'
 import { Provider, useSelector, useDispatch } from 'react-redux'
-import store, { selectSavedGames, removeGame, addGame } from '../pages/store'
+import store, { selectSavedGames, removeGame, addGame } from '../store'
 
 export const Style = styled.div`
   display: flex;
