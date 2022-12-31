@@ -1,13 +1,21 @@
 import Game from '../../components/Game'
+import GamePage from '../../components/GamePage'
 
 export default function GamePageDetails({ data }: any) {
   if (!data) {
     return <h1>Loading</h1>
   }
 
-  const { name, background_image: image, rating } = data
+  const { name, description, background_image: image, rating } = data
 
-  return <Game src={image} name={name} rating={rating} />
+  return (
+    <GamePage
+      src={image}
+      name={name}
+      rating={rating}
+      description={description}
+    />
+  )
 }
 export async function getServerSideProps({ params }: any) {
   const res = await fetch(

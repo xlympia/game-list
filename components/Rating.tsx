@@ -12,7 +12,7 @@ export default function Rating({ rating }: any) {
   const stars = []
 
   for (let i = 0; i < Math.round(rating); i++) {
-    stars.push(<AiFillStar size={25} fill={'#FFD700'} />)
+    stars.push(<AiFillStar size={25} fill={'#FFD700'} key={i} />)
   }
 
   return <Style>{stars}</Style>

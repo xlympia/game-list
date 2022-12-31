@@ -3,7 +3,7 @@ import { LinkButtons } from './LinkButtons'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Search from './Search'
-import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Style = styled.div`
   position: sticky;
@@ -12,6 +12,10 @@ const Style = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+
+  svg {
+    display: flex;
+  }
 `
 
 export default function Nav() {
@@ -28,13 +32,13 @@ export default function Nav() {
       <LinkButtons>
         {parseInt(id) - 1 > 0 ? (
           <Link href={`/games/${parseInt(id) - 1}`}>
-            <AiOutlineArrowLeft />
+            <FaArrowLeft />
           </Link>
         ) : (
           <></>
         )}
         <Link href={`/games/${parseInt(id) + 1}`}>
-          <AiOutlineArrowRight />
+          <FaArrowRight />
         </Link>
       </LinkButtons>
     </Style>

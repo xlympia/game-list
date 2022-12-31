@@ -4,8 +4,10 @@ import styled from 'styled-components'
 import useSWR from 'swr'
 
 const Style = styled.div`
-  display: flex;
-  gap: 10px;
+  form {
+    display: flex;
+    gap: 10px;
+  }
 
   input,
   button {
@@ -36,7 +38,6 @@ const fetcher = async (arg: any, ...args: any) =>
 
 export function Suggestions({ games }: any) {
   const [open, setOpen] = useState(true)
-  const ref = useRef<HTMLButtonElement>()
   const router = useRouter()
 
   function requestGamePage(name: string) {
@@ -45,10 +46,6 @@ export function Suggestions({ games }: any) {
 
   useEffect(() => {
     document.addEventListener('click', () => setOpen(false))
-
-    if (ref.current) {
-      ref.current.click()
-    }
 
     return () => {
       document.removeEventListener('click', () => setOpen(false))
