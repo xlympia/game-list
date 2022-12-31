@@ -14,7 +14,5 @@ export default async function handler(
   )
   const dataJSON = await data.json()
 
-  console.log(dataJSON.results)
-
   return await res.status(200).json(dataJSON.results)
 }

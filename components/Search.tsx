@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { HTMLAttributes, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useSWR from 'swr'
 
@@ -36,6 +36,7 @@ const fetcher = async (arg: any, ...args: any) =>
 
 export function Suggestions({ games }: any) {
   const [open, setOpen] = useState(true)
+  const ref = useRef<HTMLButtonElement>()
   const router = useRouter()
 
   function requestGamePage(name: string) {
@@ -45,6 +46,10 @@ export function Suggestions({ games }: any) {
   useEffect(() => {
     document.addEventListener('click', () => setOpen(false))
 
+    if (ref.current) {
+      ref.current.click()
+    }
+
     return () => {
       document.removeEventListener('click', () => setOpen(false))
     }
@@ -53,7 +58,9 @@ export function Suggestions({ games }: any) {
   return open ? (
     <SuggestionsStyle onClick={(event) => event.stopPropagation()}>
       {games.map((game: any) => (
-        <button onClick={() => requestGamePage(game.slug)}>{game.name}</button>
+        <button type="submit" onClick={() => requestGamePage(game.slug)}>
+          {game.name}
+        </button>
       ))}
     </SuggestionsStyle>
   ) : (
@@ -68,7 +75,9 @@ export default function Search({ results }: any) {
   )
   const router = useRouter()
 
-  function requestSearch() {
+  function requestSearch(e: any) {
+    e.preventDefault()
+
     if (search) {
       router.push(`/search/${encodeURI(search.replace(/\s+/g, '-'))}`)
     }
@@ -76,13 +85,17 @@ export default function Search({ results }: any) {
 
   return (
     <Style>
-      <input
-        type="text"
-        placeholder="Red Dead Redemption 2"
-        onChange={(e) => setSearch(e.target.value)}
-        onClick={(event) => event.stopPropagation()}
-      />
-      <button onClick={requestSearch}>Search</button>
+      <form onSubmit={requestSearch}>
+        <input
+          type="text"
+          placeholder="Red Dead Redemption 2"
+          onChange={(e) => setSearch(e.target.value)}
+          onClick={(event) => event.stopPropagation()}
+        />
+        <button type="submit" onSubmit={requestSearch}>
+          Search
+        </button>
+      </form>
 
       {suggestions && search ? <Suggestions games={suggestions} /> : <></>}
     </Style>
