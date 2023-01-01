@@ -47,9 +47,9 @@ export default function Nav() {
         <Link href={`/games/${parseInt(id) + 1}`}>
           <FaArrowRight />
         </Link>
-        <Link className="savedGames" href={'/saved/games'}>
+        {/* <Link className="savedGames" href={'/saved/games'}>
           Saved
-        </Link>
+        </Link> */}
       </LinkButtons>
     </Style>
   )
