@@ -1,7 +1,11 @@
 import { PayloadAction, configureStore, createSlice } from '@reduxjs/toolkit'
 
 interface SavedGame {
-  id: string
+  id: number
+  slug: string
+  name: string
+  background_image: string
+  rating: number
 }
 
 interface SavedGamesSliceState {
@@ -9,25 +13,20 @@ interface SavedGamesSliceState {
 }
 
 const initialState: SavedGamesSliceState = {
-  savedGames: [{ id: '28' }, { id: '12' }],
+  savedGames: [],
 }
 
 export const savedGamesSlice = createSlice({
   name: 'savedGames',
   initialState,
   reducers: {
-    addGame: (state, action: PayloadAction<string>) => {
-      state.savedGames = [
-        ...state.savedGames,
-        {
-          id: action.payload,
-        },
-      ]
+    addGame: (state, action: PayloadAction<any>) => {
+      state.savedGames = [...state.savedGames, action.payload]
     },
 
     removeGame: (state, action: PayloadAction<string>) => {
       state.savedGames = state.savedGames.filter(
-        (game) => game.id !== action.payload
+        (game) => game.name !== action.payload
       )
     },
   },

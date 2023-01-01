@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import Image from 'next/image'
 import Rating from './Rating'
-import { Provider, useSelector, useDispatch } from 'react-redux'
-import store, { selectSavedGames, removeGame, addGame } from '../store'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectSavedGames, removeGame, addGame } from '../store'
 
 export const Style = styled.div`
   display: flex;
@@ -30,14 +30,38 @@ export const Style = styled.div`
   }
 `
 
-export default function Game({ name, rating, src, onClick }: any) {
+export default function Game({ name, rating, slug, src, onClick }: any) {
   const dispatch = useDispatch()
+  const games = useSelector(selectSavedGames)
+
+  const saved = games.find((game) => game.name === name) ? true : false
 
   return (
     <Style onClick={onClick}>
-      <p>{name}</p>
-      <Rating rating={rating} />
-      <button onClick={() => dispatch(addGame(name))}>Save game</button>
+      <div>
+        <p>{name}</p>
+        <Rating rating={rating} />
+      </div>
+
+      {saved ? (
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            dispatch(removeGame(name))
+          }}
+        >
+          Remove from saved
+        </button>
+      ) : (
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            dispatch(addGame({ name, slug, background_image: src, rating }))
+          }}
+        >
+          Save game
+        </button>
+      )}
 
       {src ? (
         <Image src={src} alt={`${name} screenshot`} height={360} width={640} />

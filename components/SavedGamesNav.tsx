@@ -19,7 +19,7 @@ export default function SavedGamesNav() {
   return (
     <Style>
       <LinkButtons>
-        <Link href={`/games`}>Home</Link>
+        <Link href={'/games'}>Home</Link>
       </LinkButtons>
     </Style>
   )

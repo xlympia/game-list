@@ -3,6 +3,9 @@ import Image from 'next/image'
 import Rating from './Rating'
 import parse from 'html-react-parser'
 import { useState } from 'react'
+import Nav from './Nav'
+import { useDispatch, useSelector } from 'react-redux'
+import { addGame, removeGame, selectSavedGames } from '../store'
 
 export const Style = styled.div`
   display: flex;
@@ -43,6 +46,8 @@ export const Style = styled.div`
 
   .description button {
     font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: 0.5rem;
   }
 
@@ -53,7 +58,7 @@ export const Style = styled.div`
   }
 `
 
-// Shorten a string to less than maxLen characters without truncating words.
+// INFO: Shorten a string to less than maxLen characters without truncating words.
 function shorten(str: string, maxLen: number, separator = ' ') {
   if (str.length <= maxLen) return str
   return str.substring(0, str.lastIndexOf(separator, maxLen))
@@ -62,38 +67,82 @@ function shorten(str: string, maxLen: number, separator = ' ') {
 export default function GamePage({
   name,
   rating,
+  slug,
   description,
   src,
   onClick,
 }: any) {
   const [expanded, setExpanded] = useState(false)
-  const subDescription = shorten(description, 450) + ' ...'
+  const subDescription =
+    description.length > 350 ? shorten(description, 350) + ' ...' : description
+
+  const dispatch = useDispatch()
+  const games = useSelector(selectSavedGames)
+  const saved = games.find((game) => game.name === name) ? true : false
 
   return (
-    <Style onClick={onClick}>
-      <div className="nameRating">
-        <p>{name}</p>
-        <Rating rating={rating} />
-      </div>
-      <p className="description">
-        {expanded ? (
-          <div>
-            {parse(description)}
-            <button onClick={() => setExpanded(!expanded)}>Show less</button>
-          </div>
-        ) : (
-          <div>
-            {parse(subDescription)}
-            <button onClick={() => setExpanded(!expanded)}>Show more</button>
-          </div>
-        )}
-      </p>
+    <>
+      <Nav />
+      <Style onClick={onClick}>
+        <div className="nameRating">
+          <p>{name}</p>
+          <Rating rating={rating} />
+        </div>
+        <div className="description">
+          {expanded ? (
+            <div>
+              {parse(description)}
+              {subDescription !== description ? (
+                <button onClick={() => setExpanded(!expanded)}>
+                  Show less
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
+          ) : (
+            <div>
+              {parse(subDescription)}
+              <button onClick={() => setExpanded(!expanded)}>Show more</button>
+            </div>
+          )}
 
-      {src ? (
-        <Image src={src} alt={`${name} screenshot`} height={360} width={640} />
-      ) : (
-        <></>
-      )}
-    </Style>
+          <div className="saved">
+            {saved ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  dispatch(removeGame(name))
+                }}
+              >
+                Remove from saved
+              </button>
+            ) : (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  dispatch(
+                    addGame({ name, slug, background_image: src, rating })
+                  )
+                }}
+              >
+                Save game
+              </button>
+            )}
+          </div>
+        </div>
+
+        {src ? (
+          <Image
+            src={src}
+            alt={`${name} screenshot`}
+            height={360}
+            width={640}
+          />
+        ) : (
+          <></>
+        )}
+      </Style>
+    </>
   )
 }

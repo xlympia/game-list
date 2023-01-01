@@ -55,7 +55,11 @@ export function Suggestions({ games }: any) {
   return open ? (
     <SuggestionsStyle onClick={(event) => event.stopPropagation()}>
       {games.map((game: any) => (
-        <button type="submit" onClick={() => requestGamePage(game.slug)}>
+        <button
+          key={game.name}
+          type="submit"
+          onClick={() => requestGamePage(game.slug)}
+        >
           {game.name}
         </button>
       ))}

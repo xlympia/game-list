@@ -20,6 +20,7 @@ export default function GameGrid({ results }: any) {
             key={slug}
             src={image ?? ''}
             name={name}
+            slug={slug}
             rating={rating}
             onClick={() => router.push(`/game/${slug}`)}
           />

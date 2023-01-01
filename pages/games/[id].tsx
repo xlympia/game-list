@@ -6,8 +6,6 @@ export default function GamesPageDetails({ results }: any) {
     return <h1>Loading</h1>
   }
 
-  console.log(results)
-
   return (
     <main>
       <Nav />
