@@ -12,8 +12,24 @@ interface SavedGamesSliceState {
   savedGames: SavedGame[]
 }
 
+const getFromLocalStorage = (key: string) => {
+  if (!key || typeof window === 'undefined') {
+    return ''
+  }
+  return localStorage.getItem(key)
+}
+
+const setToLocalStorage = (key: string, value: any) => {
+  if (!key || typeof window === 'undefined') {
+    return ''
+  }
+  return localStorage.setItem(key, JSON.stringify(value))
+}
+
 const initialState: SavedGamesSliceState = {
-  savedGames: [],
+  savedGames: getFromLocalStorage('savedGames')
+    ? JSON.parse(getFromLocalStorage('savedGames') || '{}')
+    : [],
 }
 
 export const savedGamesSlice = createSlice({
@@ -22,12 +38,15 @@ export const savedGamesSlice = createSlice({
   reducers: {
     addGame: (state, action: PayloadAction<any>) => {
       state.savedGames = [...state.savedGames, action.payload]
+      setToLocalStorage('savedGames', state.savedGames)
     },
 
     removeGame: (state, action: PayloadAction<string>) => {
       state.savedGames = state.savedGames.filter(
         (game) => game.name !== action.payload
       )
+
+      setToLocalStorage('savedGames', state.savedGames)
     },
   },
 })

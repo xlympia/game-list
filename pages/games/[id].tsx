@@ -9,7 +9,7 @@ export default function GamesPageDetails({ results }: any) {
   return (
     <main>
       <Nav />
-      <GameGrid results={results} />
+      <GameGrid suppressHydrationWarning results={results} />
     </main>
   )
 }

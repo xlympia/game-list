@@ -78,17 +78,17 @@ export default function GamePage({
 
   const dispatch = useDispatch()
   const games = useSelector(selectSavedGames)
-  const saved = games.find((game) => game.name === name) ? true : false
+  const saved = games.find((game: any) => game.name === name) ? true : false
 
   return (
-    <>
+    <div suppressHydrationWarning>
       <Nav />
-      <Style onClick={onClick}>
+      <Style suppressHydrationWarning onClick={onClick}>
         <div className="nameRating">
           <p>{name}</p>
           <Rating rating={rating} />
         </div>
-        <div className="description">
+        <div className="description" suppressHydrationWarning>
           {expanded ? (
             <div>
               {parse(description)}
@@ -103,13 +103,20 @@ export default function GamePage({
           ) : (
             <div>
               {parse(subDescription)}
-              <button onClick={() => setExpanded(!expanded)}>Show more</button>
+              {subDescription !== description ? (
+                <button onClick={() => setExpanded(!expanded)}>
+                  Show more
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           )}
 
-          <div className="saved">
+          {/* <div suppressHydrationWarning className="saved">
             {saved ? (
               <button
+                suppressHydrationWarning
                 onClick={(e) => {
                   e.stopPropagation()
                   dispatch(removeGame(name))
@@ -119,6 +126,7 @@ export default function GamePage({
               </button>
             ) : (
               <button
+                suppressHydrationWarning
                 onClick={(e) => {
                   e.stopPropagation()
                   dispatch(
@@ -129,7 +137,7 @@ export default function GamePage({
                 Save game
               </button>
             )}
-          </div>
+          </div> */}
         </div>
 
         {src ? (
@@ -143,6 +151,6 @@ export default function GamePage({
           <></>
         )}
       </Style>
-    </>
+    </div>
   )
 }

@@ -12,20 +12,22 @@ export const Grid = styled.div`
 
 export default function GameGrid({ results }: any) {
   return (
-    <Grid>
-      {results.map((game: any) => {
-        const { name, slug, background_image: image, rating } = game
-        return (
-          <Game
-            key={slug}
-            src={image ?? ''}
-            name={name}
-            slug={slug}
-            rating={rating}
-            onClick={() => router.push(`/game/${slug}`)}
-          />
-        )
-      })}
-    </Grid>
+    results && (
+      <Grid>
+        {results.map((game: any) => {
+          const { name, slug, background_image: image, rating } = game
+          return (
+            <Game
+              key={slug + name}
+              src={image ?? ''}
+              name={name}
+              slug={slug}
+              rating={rating}
+              onClick={() => router.push(`/game/${slug}`)}
+            />
+          )
+        })}
+      </Grid>
+    )
   )
 }

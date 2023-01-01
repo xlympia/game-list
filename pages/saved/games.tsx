@@ -5,11 +5,10 @@ import { selectSavedGames } from '../../store'
 
 export default function SavedGames() {
   const games = useSelector(selectSavedGames)
-
   return (
-    <main>
+    <main suppressHydrationWarning>
       <SavedGamesNav />
-      <GameGrid results={games} />
+      {/* {<GameGrid suppressHydrationWarning results={games} />} */}
     </main>
   )
 }

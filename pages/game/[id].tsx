@@ -10,6 +10,7 @@ export default function GamePageDetails({ data }: any) {
 
   return (
     <GamePage
+      suppressHydrationWarning
       src={image}
       name={name}
       rating={rating}

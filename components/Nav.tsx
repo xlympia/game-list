@@ -32,6 +32,9 @@ export default function Nav() {
 
   return (
     <Style>
+      <LinkButtons>
+        <Link href={'/games'}>Home</Link>
+      </LinkButtons>
       <Search />
       <LinkButtons>
         {parseInt(id) - 1 > 0 ? (

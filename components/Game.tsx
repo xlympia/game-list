@@ -34,17 +34,18 @@ export default function Game({ name, rating, slug, src, onClick }: any) {
   const dispatch = useDispatch()
   const games = useSelector(selectSavedGames)
 
-  const saved = games.find((game) => game.name === name) ? true : false
+  const saved = games.find((game: any) => game.name === name) ? true : false
 
   return (
-    <Style onClick={onClick}>
-      <div>
+    <Style suppressHydrationWarning onClick={onClick}>
+      <div suppressHydrationWarning>
         <p>{name}</p>
         <Rating rating={rating} />
       </div>
 
-      {saved ? (
+      {/* {saved ? (
         <button
+          suppressHydrationWarning
           onClick={(e) => {
             e.stopPropagation()
             dispatch(removeGame(name))
@@ -54,6 +55,7 @@ export default function Game({ name, rating, slug, src, onClick }: any) {
         </button>
       ) : (
         <button
+          suppressHydrationWarning
           onClick={(e) => {
             e.stopPropagation()
             dispatch(addGame({ name, slug, background_image: src, rating }))
@@ -61,7 +63,7 @@ export default function Game({ name, rating, slug, src, onClick }: any) {
         >
           Save game
         </button>
-      )}
+      )} */}
 
       {src ? (
         <Image src={src} alt={`${name} screenshot`} height={360} width={640} />
