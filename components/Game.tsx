@@ -14,7 +14,7 @@ export const Style = styled.div`
   transition: all 0.1s ease-in-out;
 
   img {
-    margin-top: 10px;
+    margin-top: 1rem;
     width: 100%;
     height: 100%;
     border-radius: 8px;
